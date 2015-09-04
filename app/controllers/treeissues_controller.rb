@@ -11,11 +11,11 @@ class TreeissuesController < ApplicationController
   def find_project
     @project = Project.find(params[:project_id])
    
-    @issues = @project.issues.find_all_by_parent_id(params[:parent_id])
+    @issues = @project.issues.where(:parent_id => params[:parent_id])
     @arIssues = []
     @issues.map {|issue|
       pid=issue.id
-      children = @project.issues.find_all_by_parent_id(pid)
+      children = @project.issues.where(:parent_id => pid)
       item = {}
       item['children'] = children.size
       item['issue'] = issue;
